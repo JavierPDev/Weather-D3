@@ -2,49 +2,36 @@ import React from 'react';
 
 import BarChart from 'BarChart';
 
-const data = [
+const forecasts = [
   {
-    yValue: 11,
-    xValue: '2000',
+    temp: 11,
+    day: 'Today',
   },
   {
-    yValue: 26,
-    xValue: '2001'
+    temp: 26,
+    day: 'Friday'
   },
   {
-    yValue: 27,
-    xValue: '2002'
+    temp: 27,
+    day: 'Saturday'
   },
   {
-    yValue: 33,
-    xValue: '2003'
+    temp: 33,
+    day: 'Sunday'
   },
   {
-    yValue: 42,
-    xValue: '2004'
+    temp: 42,
+    day: 'Monday'
   },
   {
-    yValue: 40,
-    xValue: '2005'
+    temp: 40,
+    day: 'Tuesday'
   },
-  {
-    yValue: 51,
-    xValue: '2006'
-  },
-  {
-    yValue: 61,
-    xValue: '2007'
-  },
-  {
-    yValue: 63,
-    xValue: '2008'
-  },
-  {
-    yValue: 52,
-    xValue: '2009'
-  }
 ];
 
+const data = forecasts.map(forecast => {
+  return {xValue: forecast.day, yValue: forecast.temp};
+});
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -55,19 +42,17 @@ export default class Home extends React.Component {
 
   log(d, i) {
     this.setState({
-      xValue: d.xValue,
-      yValue: d.yValue,
-      i: i
+      temp: forecasts[i].temp,
+      day: forecasts[i].day
     });
   }
 
   renderSelectedInfo() {
-    if (this.state.xValue) {
+    if (this.state.temp) {
       return (
         <div>
-          <p>{this.state.xValue}</p>
-          <p>{this.state.yValue}</p>
-          <p>{this.state.i}</p>
+          <p>{this.state.temp}</p>
+          <p>{this.state.day}</p>
         </div>
       );
     }
