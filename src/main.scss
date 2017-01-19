@@ -1,0 +1,41 @@
+@import 'vendor';
+@import 'variables';
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.polygons path {
+  cursor: pointer;
+  fill: black;
+  stroke: lightsteelblue;
+  transition: fill .25s;
+  z-index: 100;
+}
+
+.polygons path:hover {
+  fill: navy;
+}
+
+.fuel circle {
+  fill: steelblue;
+  z-index: 1;
+}
+
+.tooltip {
+  color: white;
+  font-family: arial;
+  font-size: 18px;
+  z-index: 1;
+}
+
+.bar {
+  fill: navy;
+}
+
+.bar:hover {
+  cursor: pointer;
+  fill: steelblue;
+}
+
