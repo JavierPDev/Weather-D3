@@ -27,13 +27,16 @@ export default class BarChart extends React.Component {
     // Get 10 less than min or 0 so there is always a bar for lowest number
     const min = d3.min(data, d => d.yValue);
     const yMin = min < 0 ? min - 10 : 0;
+    // Use native max instead of d3.max since d3 sometimes returns wrong max
+    const yMax = Math.max(...data.map(d => d.yValue));
+    // const yMax = d3.max(data, d => d.yValue);
 
     // Create scales
     const xScale = d3.scaleBand()
       .domain(data.map(d => d.xValue))
       .rangeRound([0, width]).padding(.4);
     const yScale = d3.scaleLinear()
-      .domain([yMin, d3.max(data, d => d.yValue)])
+      .domain([yMin, yMax])
       .range([height, yMin]);
 
     // Create axes

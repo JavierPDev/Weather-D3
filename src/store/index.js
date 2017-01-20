@@ -1,13 +1,13 @@
 import * as redux from 'redux';
 import thunk from 'redux-thunk';
 
-import defaultReducer from 'defaultReducer';
+import forecastReducer from 'forecastReducer';
 
 export const store = configureStore();
 
 function configureStore() {
   const reducer = redux.combineReducers({
-    default: defaultReducer
+    forecast: forecastReducer
   });
 
   // Setup for chrome redux devtools
