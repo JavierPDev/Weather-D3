@@ -15,22 +15,26 @@ export default class BarChart extends React.Component {
 
     const svg = d3.select(div)
       .append('svg')
-        .attr('width', '960')
-        .attr('height', '500');
+        .attr('width', '640')
+        .attr('height', '480');
 
-    const margin = {top:50, right: 20, bottom: 30, left: 30};
+    const margin = {top: 90, right: 20, bottom: 30, left: 30};
     const textMarginBottom = 15;
 
     const width = +svg.attr('width') - margin.left - margin.right;
     const height = +svg.attr('height') - margin.top - margin.bottom;
 
+    // Get 10 less than min or 0 so there is always a bar for lowest number
+    const min = d3.min(data, d => d.yValue);
+    const yMin = min < 0 ? min - 10 : 0;
+
     // Create scales
     const xScale = d3.scaleBand()
       .domain(data.map(d => d.xValue))
-      .rangeRound([0, width]).padding(.1);
+      .rangeRound([0, width]).padding(.4);
     const yScale = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.yValue)])
-      .range([height, 0]);
+      .domain([yMin, d3.max(data, d => d.yValue)])
+      .range([height, yMin]);
 
     // Create axes
     const xAxis = d3.axisBottom(xScale);

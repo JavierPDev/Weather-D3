@@ -1,68 +1,62 @@
 import React from 'react';
 
 import BarChart from 'BarChart';
-
-const forecasts = [
-  {
-    temp: 11,
-    day: 'Today',
-  },
-  {
-    temp: 26,
-    day: 'Friday'
-  },
-  {
-    temp: 27,
-    day: 'Saturday'
-  },
-  {
-    temp: 33,
-    day: 'Sunday'
-  },
-  {
-    temp: 42,
-    day: 'Monday'
-  },
-  {
-    temp: 40,
-    day: 'Tuesday'
-  },
-];
-
-const data = forecasts.map(forecast => {
-  return {xValue: forecast.day, yValue: forecast.temp};
-});
+import { getForecast } from '../api/forecast';
 
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    this.log = this.log.bind(this);
+    this.state = {selectedInfo: {}, barData: [], forecast: []};
+    this.onBarMouseEvent = this.onBarMouseEvent.bind(this);
   }
 
-  log(d, i) {
+  componentDidMount() {
+    getForecast('Chicago', 'IL')
+      .then(forecast => {
+        const barData = forecast.map(d => {
+          return {xValue: d.day, yValue: d.high};
+        });
+
+        this.setState({barData, forecast});
+      })
+      .catch(err => console.log);
+  }
+
+  onBarMouseEvent(d, i) {
+    const {high, day} = this.state.forecast[i];
+
     this.setState({
-      temp: forecasts[i].temp,
-      day: forecasts[i].day
+      selectedInfo: {high, day}
     });
   }
 
+  renderBarChart() {
+    if (!this.state.barData) return null;
+
+    return <BarChart
+      data={this.state.barData}
+      onBarClick={this.onBarMouseEvent}
+      onBarMouseenter={this.onBarMouseEvent}
+    />;
+  }
+
   renderSelectedInfo() {
-    if (this.state.temp) {
-      return (
-        <div>
-          <p>{this.state.temp}</p>
-          <p>{this.state.day}</p>
-        </div>
-      );
-    }
-    return null;
+    if (!this.state.selectedInfo.high) return null;
+
+    const {high, day} = this.state.selectedInfo;
+    
+    return (
+      <div>
+        <p>{high}</p>
+        <p>{day}</p>
+      </div>
+    );
   }
 
   render() {
     return (
       <div>
-        <BarChart data={data} onBarClick={this.log} onBarMouseenter={this.log} />
+        {this.renderBarChart()}
         {this.renderSelectedInfo()}
       </div>
     );

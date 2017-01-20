@@ -10,7 +10,7 @@ import './main.scss';
 
 ReactDOM.render(
   <Provider store={store}>
-      {routes}
+    {routes}
   </Provider>,
   document.getElementById('app')
 );

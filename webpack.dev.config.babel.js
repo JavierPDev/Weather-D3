@@ -2,6 +2,7 @@ import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 import config from './webpack.config.babel';
+import { WUNDERGROUND_API_KEY } from './environment.json';
 
 config.output = {
   path: './dist/',
@@ -42,5 +43,14 @@ config.module.loaders.push({
 config.plugins.push(
   new webpack.HotModuleReplacementPlugin()
 );
+
+// Set environment variables for opeanweathermap api key
+config.plugins.push(new webpack.DefinePlugin({
+  'process.env': {
+    'WUNDERGROUND_API_KEY': JSON.stringify(
+      process.env.WUNDERGROUND_API_KEY || WUNDERGROUND_API_KEY
+    )
+  }
+}));
 
 module.exports = config;
