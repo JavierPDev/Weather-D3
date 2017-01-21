@@ -3,23 +3,27 @@ import { connect } from 'react-redux';
 
 import Forecast from 'Forecast';
 import SearchBar from 'SearchBar';
+import CurrentLocation from 'CurrentLocation';
+import CurrentConditions from 'CurrentConditions';
 
 class Home extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  renderForecast() {
+  renderWeatherComponents() {
     if (!this.props.forecast.length) return <p>Nothing atm</p>;
 
-    return <Forecast />;
+    return (
+      <div>
+        <CurrentConditions />
+        <Forecast />
+      </div>
+    );
   }
 
   render() {
     return (
       <div>
         <SearchBar />
-        {this.renderForecast()}
+        <CurrentLocation />
+        {this.renderWeatherComponents()}
       </div>
     );
   }

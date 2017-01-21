@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { getForecast } from '../api/forecast';
 import { forecastRetrievalCompleted } from 'forecastActions';
+import { changeLocation } from 'appActions';
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -23,7 +24,9 @@ class SearchBar extends React.Component {
 
     getForecast(city, state)
       .then(forecast => {
+        this.props.dispatch(changeLocation(city+', '+state));
         this.props.dispatch(forecastRetrievalCompleted(forecast));
+        this.setState({search: ''});
       })
       .catch(err => console.log);
   }
@@ -42,6 +45,7 @@ class SearchBar extends React.Component {
           onChange={this.handleSearchChange}
           value={this.state.search}
         />
+        <button type="submit">Search</button>
       </form>
     );
   }
