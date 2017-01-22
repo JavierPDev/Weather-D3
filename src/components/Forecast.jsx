@@ -25,7 +25,7 @@ class Forecast extends React.Component {
     const barData = this.props.forecast.map(d => {
       return {
         xValue: d.date.weekday,
-        yValue: d.high.fahrenheit
+        yValue: d.high[this.props.app.unitType]
       };
     });
 
@@ -66,6 +66,7 @@ class Forecast extends React.Component {
 
 export default connect(state => {
   return {
+    app: state.app,
     forecast: state.forecast
   };
 })(Forecast);

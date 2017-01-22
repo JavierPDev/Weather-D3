@@ -4,3 +4,10 @@ export function changeLocation(location) {
     location
   };
 }
+
+export function changeUnitType(unitType) {
+  return {
+    type: 'CHANGE_UNIT_TYPE',
+    unitType
+  };
+}

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Forecast from 'Forecast';
 import SearchBar from 'SearchBar';
+import UnitTypeToggle from 'UnitTypeToggle';
 import CurrentLocation from 'CurrentLocation';
 import CurrentConditions from 'CurrentConditions';
 
@@ -22,6 +23,7 @@ class Home extends React.Component {
     return (
       <div>
         <SearchBar />
+        <UnitTypeToggle />
         <CurrentLocation />
         {this.renderWeatherComponents()}
       </div>
