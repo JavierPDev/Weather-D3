@@ -3,10 +3,29 @@ import ReactFauxDOM from 'react-faux-dom';
 import * as d3 from 'd3';
 
 export default class BarChart extends React.Component {
+  constructor(props) {
+    super(props);
+    const dimensions = this.getComponentDimensions();
+    this.state = {...dimensions};
+  }
+
   static propTypes = {
     data: React.PropTypes.array.isRequired,
     onBarClick: React.PropTypes.func,
     onBarMouseenter: React.PropTypes.func
+  }
+
+  getComponentDimensions() {
+    const componentWidth = window.innerWidth < 640 ? window.innerWidth : 640;
+    const componentHeight = componentWidth < 640 ? componentWidth / 1.3 : 480;
+
+    return {componentWidth, componentHeight};
+  }
+
+  componentDidMount() {
+    d3.select(window).on('resize', () => {
+      this.setState(this.getComponentDimensions());
+    });
   }
 
   render() {
@@ -15,8 +34,8 @@ export default class BarChart extends React.Component {
 
     const svg = d3.select(div)
       .append('svg')
-        .attr('width', '640')
-        .attr('height', '480');
+        .attr('width', this.state.componentWidth)
+        .attr('height', this.state.componentHeight);
 
     const margin = {top: 90, right: 20, bottom: 30, left: 30};
     const textMarginBottom = 15;
