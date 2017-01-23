@@ -23,14 +23,14 @@ class UnitTypeToggle extends React.Component {
       <div>
         <h3>
           <span
-            onClick={this.onToggleClick.bind(this, 'fahrenheit')}
-            className={'toggle '+ this.getToggleClass('fahrenheit')}>
+            onClick={this.onToggleClick.bind(this, 'imperial')}
+            className={'toggle '+ this.getToggleClass('imperial')}>
             F
           </span>
           /
           <span
-            onClick={this.onToggleClick.bind(this, 'celsius')}
-            className={'toggle '+ this.getToggleClass('celsius')}>
+            onClick={this.onToggleClick.bind(this, 'metric')}
+            className={'toggle '+ this.getToggleClass('metric')}>
             C
           </span>
         </h3>

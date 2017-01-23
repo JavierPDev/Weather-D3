@@ -3,12 +3,14 @@ import thunk from 'redux-thunk';
 
 import forecastReducer from 'forecastReducer';
 import appReducer from 'appReducer';
+import selectConditionsReducer from 'selectConditionsReducer';
 
 export const store = configureStore();
 
 function configureStore() {
   const reducer = redux.combineReducers({
     app: appReducer,
+    selectedConditions: selectConditionsReducer,
     forecast: forecastReducer
   });
 

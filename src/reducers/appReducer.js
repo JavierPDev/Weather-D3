@@ -1,5 +1,5 @@
 const defaultState = {
-  unitType: 'fahrenheit'
+  unitType: 'imperial'
 };
 
 export default function appReducer(state = defaultState, action) {

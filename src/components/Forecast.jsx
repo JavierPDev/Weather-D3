@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import BarChart from 'BarChart';
 import { getForecast } from '../api/forecast';
+import { selectConditions } from 'selectConditionsActions';
 
 class Forecast extends React.Component {
   constructor(props) {
@@ -12,20 +13,18 @@ class Forecast extends React.Component {
   }
 
   onBarMouseEvent(d, i) {
-    const {high, date} = this.props.forecast[i];
-
-    this.setState({
-      selectedInfo: {high, date}
-    });
+    this.props.dispatch(selectConditions(this.props.forecast[i]));
   }
 
   renderBarChart() {
-    if (!this.props.forecast) return null;
+    if (!this.props.forecast.length) return null;
 
     const barData = this.props.forecast.map(d => {
       return {
         xValue: d.date.weekday,
-        yValue: d.high[this.props.app.unitType]
+        yValue: d.high[
+          this.props.app.unitType === 'imperial' ? 'fahrenheit' : 'celsius'
+        ]
       };
     });
 
@@ -41,24 +40,10 @@ class Forecast extends React.Component {
     );
   }
 
-  renderSelectedInfo() {
-    if (!this.state.selectedInfo.high) return null;
-
-    const {high, date} = this.state.selectedInfo;
-    
-    return (
-      <div>
-        <p>{high.fahrenheit}</p>
-        <p>{date.weekday}</p>
-      </div>
-    );
-  }
-
   render() {
     return (
       <div>
         {this.renderBarChart()}
-        {this.renderSelectedInfo()}
       </div>
     );
   }
