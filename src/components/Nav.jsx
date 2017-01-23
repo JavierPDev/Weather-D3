@@ -10,16 +10,16 @@ export default function Nav() {
       <div className="container">
         <div className="row">
           <div className="col-xs-12">
-              <div className="navbar-form navbar-left" role="search">
-                <div className="form-group">
-                  <SearchBar />
-                </div>
-                <ul className="nav navbar-nav navbar-right">
-                  <li>
-                    <Link to="/forecast">Forecast</Link>
-                  </li>
-                </ul>
+            <div className="navbar-form navbar-left" role="search">
+              <div className="form-group">
+                <SearchBar />
               </div>
+            </div>
+            <ul className="nav navbar-nav">
+              <li>
+                <Link to="/forecast">Forecast</Link>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

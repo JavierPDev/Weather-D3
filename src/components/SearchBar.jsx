@@ -57,8 +57,9 @@ class SearchBar extends React.Component {
         <input
           type="search"
           className="form-control"
-          placeholder="Chicago, IL"
+          placeholder="Chicago, IL | Paris, France"
           onChange={this.handleSearchChange}
+          style={{minWidth: 300}}
           ref={(ref) => this.searchInput = ref}
           value={this.state.search}
         />
