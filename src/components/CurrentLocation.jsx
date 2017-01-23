@@ -7,7 +7,7 @@ class CurrentLocation extends React.Component {
 
     if (!location) return null;
 
-    return <h2>{location}</h2>;
+    return <h2>{location.replace('_', ' ')}</h2>;
   }
 
   render() {

@@ -19,7 +19,7 @@ class SearchBar extends React.Component {
     e.preventDefault();
 
     const input = this.state.search.split(', ');
-    const city = input[0].split(' ').join('_');
+    const city = input[0].replace(' ', '_');
     const state = input[1];
 
     getForecast(city, state)
