@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import BarChart from 'BarChart';
-import { getForecast } from '../api/forecast';
 import { selectConditions } from 'selectConditionsActions';
 
 class Forecast extends React.Component {
