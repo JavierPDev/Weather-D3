@@ -10,10 +10,12 @@ class Alert extends React.Component {
     this.handleExitClick = this.handleExitClick.bind(this);
   }
 
-  componentDidUpdate() {
-    setTimeout(() => {
-      this.props.dispatch(setAlert({type: null, message: null}));
-    }, 3000);
+  componentWillReceiveProps(nextProps) {
+    if (nextProps && nextProps.app.alert.type) {
+      setTimeout(() => {
+        this.props.dispatch(setAlert({type: null, message: null}));
+      }, 3000);
+    }
   }
 
   handleExitClick() {
