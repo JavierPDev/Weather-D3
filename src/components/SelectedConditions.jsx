@@ -33,6 +33,9 @@ class SelectedConditions extends React.Component {
             Maxwind: {selectedConditions.maxwind[windUnit] + windUnit}
           </div>
           <div>
+            Average wind: {selectedConditions.avewind[windUnit] + windUnit}
+          </div>
+          <div>
             Precipitation: {
               selectedConditions.qpf_allday[precipUnit] + precipUnit
             }

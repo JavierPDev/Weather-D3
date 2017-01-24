@@ -17,7 +17,19 @@ export default function Nav() {
             </div>
             <ul className="nav navbar-nav">
               <li>
-                <Link to="/forecast">Forecast</Link>
+                <Link to="/forecast" activeClassName="active-nav-link">
+                  Forecast
+                </Link>
+              </li>
+              <li>
+                <Link to="/windspeed" activeClassName="active-nav-link">
+                  Windspeed
+                </Link>
+              </li>
+              <li>
+                <Link to="/humidity" activeClassName="active-nav-link">
+                  Humidity
+                </Link>
               </li>
             </ul>
           </div>
