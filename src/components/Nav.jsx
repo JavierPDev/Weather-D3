@@ -31,6 +31,11 @@ export default function Nav() {
                   Humidity
                 </Link>
               </li>
+              <li>
+                <Link to="/averages" activeClassName="active-nav-link">
+                  5-Day Averages
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
