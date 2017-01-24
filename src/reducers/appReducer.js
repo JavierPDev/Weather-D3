@@ -1,5 +1,7 @@
 const defaultState = {
-  unitType: 'imperial'
+  alert: {},
+  location: '',
+  unitType: 'imperial',
 };
 
 export default function appReducer(state = defaultState, action) {
@@ -13,6 +15,11 @@ export default function appReducer(state = defaultState, action) {
       return {
         ...state,
         unitType: action.unitType
+      };
+    case 'SET_ALERT':
+      return {
+        ...state,
+        alert: action.alert
       };
     default:
       return state;

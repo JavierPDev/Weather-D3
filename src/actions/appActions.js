@@ -11,3 +11,10 @@ export function changeUnitType(unitType) {
     unitType
   };
 }
+
+export function setAlert({type, message}) {
+  return {
+    type: 'SET_ALERT',
+    alert: {type, message}
+  };
+}
