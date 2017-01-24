@@ -9,6 +9,5 @@ export function getForecast(city, state) {
     .then(res => {
       console.log('res', res);
       return res.data.forecast.simpleforecast.forecastday.slice(0, 5);
-    })
-    .catch(err => console.log);
+    });
 }

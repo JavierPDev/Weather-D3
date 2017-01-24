@@ -3,19 +3,28 @@ import { connect } from 'react-redux';
 
 import { getForecast } from '../api/forecast';
 import { forecastRetrievalCompleted } from 'forecastActions';
-import { changeLocation } from 'appActions';
+import { changeLocation, setAlert } from 'appActions';
 import { selectConditions } from 'selectConditionsActions';
 
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
     this.state = {
       search: ''
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
+  /**
+   * Get city and state from city, state string. City and state/country will be
+   * properly capitalized.
+   *
+   * @param {String} input - City, State string
+   * @return {Object} city, state
+   */
   transformLocation(input) {
     input = input.split(/(,\s)|(,)/);
     const cityInput = input[0].replace(' ', '_');
@@ -31,19 +40,27 @@ class SearchBar extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const {city, state} = this.transformLocation(this.state.search);
+    (async () => {
+      try {
+        const {city, state} = this.transformLocation(this.state.search);
+        const forecast = await getForecast(city, state);
 
-    getForecast(city, state)
-      .then(forecast => {
         this.props.dispatch(changeLocation(city+', '+state));
         this.props.dispatch(selectConditions(forecast[0]));
         this.props.dispatch(forecastRetrievalCompleted(forecast));
         this.setState({search: ''});
-      })
-      .catch(err => console.log);
 
-    // Blur input for mobile users
-    this.searchInput.blur();
+        // Blur input for mobile users
+        this.searchInputRef.blur();
+      } catch(err) {
+        console.log(err);
+        this.props.dispatch(setAlert({
+          type: 'danger',
+          message: `Could not retrieve forecast data. Did you enter the city, 
+          state/country correctly?`
+        }));
+      }
+    })();
   }
 
   handleSearchChange(event) {
@@ -60,7 +77,7 @@ class SearchBar extends React.Component {
           placeholder="Chicago, IL | Paris, France"
           onChange={this.handleSearchChange}
           style={{minWidth: 300}}
-          ref={(ref) => this.searchInput = ref}
+          ref={(ref) => this.searchInputRef = ref}
           value={this.state.search}
         />
         <button type="submit" className="btn btn-default">Search</button>
