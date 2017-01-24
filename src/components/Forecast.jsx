@@ -8,10 +8,10 @@ class Forecast extends React.Component {
   constructor(props) {
     super(props);
     this.state = {selectedInfo: {}};
-    this.onBarMouseEvent = this.onBarMouseEvent.bind(this);
+    this.displayConditions = this.displayConditions.bind(this);
   }
 
-  onBarMouseEvent(d, i) {
+  displayConditions(d, i) {
     this.props.dispatch(selectConditions(this.props.forecast[i]));
   }
 
@@ -32,8 +32,8 @@ class Forecast extends React.Component {
         <h1>5 Day Forecast</h1>
         <BarChart
           data={barData}
-          onBarClick={this.onBarMouseEvent}
-          onBarMouseenter={this.onBarMouseEvent}
+          onBarClick={this.displayConditions}
+          onBarMouseenter={this.displayConditions}
         />
       </div>
     );

@@ -30,11 +30,11 @@ html, body {
   z-index: 1;
 }
 
-.bar {
+.bar, .dot {
   fill: #336eb7;
 }
 
-.bar:hover {
+.bar:hover, .dot:hover {
   cursor: pointer;
   fill: #31418f;
 }

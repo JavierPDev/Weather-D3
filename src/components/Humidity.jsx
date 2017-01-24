@@ -1,26 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import BarChart from 'BarChart';
+import LineChart from 'LineChart';
 import { selectConditions } from 'selectConditionsActions';
 
 class Humidity extends React.Component {
   constructor(props) {
     super(props);
     this.state = {selectedInfo: {}};
-    this.onChartMouseEvent = this.onChartMouseEvent.bind(this);
+    this.displayConditions = this.displayConditions.bind(this);
   }
 
-  onChartMouseEvent(d, i) {
+  displayConditions(d, i) {
     this.props.dispatch(selectConditions(this.props.forecast[i]));
   }
 
-  renderBarChart() {
+  renderLineChart() {
     if (!this.props.forecast.length) return null;
 
     const barData = this.props.forecast.map(d => {
       return {
-        xValue: d.date.weekday,
+        xValue: new Date(d.date.epoch * 1000),
         yValue: d.avehumidity
       };
     });
@@ -28,10 +28,10 @@ class Humidity extends React.Component {
     return (
       <div>
         <h1>5 Day Humidity</h1>
-        <BarChart
+        <LineChart
           data={barData}
-          onBarClick={this.onChartMouseEvent}
-          onBarMouseenter={this.onChartMouseEvent}
+          onDotClick={this.displayConditions}
+          onDotMouseenter={this.displayConditions}
         />
       </div>
     );
@@ -40,7 +40,7 @@ class Humidity extends React.Component {
   render() {
     return (
       <div>
-        {this.renderBarChart()}
+        {this.renderLineChart()}
       </div>
     );
   }
@@ -48,7 +48,6 @@ class Humidity extends React.Component {
 
 export default connect(state => {
   return {
-    app: state.app,
     forecast: state.forecast
   };
 })(Humidity);
