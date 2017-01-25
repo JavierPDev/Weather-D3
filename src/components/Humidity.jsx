@@ -32,6 +32,9 @@ class Humidity extends React.Component {
           data={barData}
           onDotClick={this.displayConditions}
           onDotMouseenter={this.displayConditions}
+          yAxisLabel={'In percent (%)'}
+          yMin={0}
+          yMax={100}
         />
       </div>
     );

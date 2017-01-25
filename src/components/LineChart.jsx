@@ -12,7 +12,10 @@ export default class LineChart extends React.Component {
   static propTypes = {
     data: React.PropTypes.array.isRequired,
     onDotClick: React.PropTypes.func,
-    onDotMouseenter: React.PropTypes.func
+    onDotMouseenter: React.PropTypes.func,
+    yAxisLabel: React.PropTypes.string,
+    yMin: React.PropTypes.number,
+    YMax: React.PropTypes.number
   }
 
   getComponentDimensions() {
@@ -40,11 +43,12 @@ export default class LineChart extends React.Component {
     const margin = {top: 90, right: 20, bottom: 30, left: 30};
     const textMarginBottom = 15;
 
-    const width = +svg.attr('width') - margin.left - margin.right - 10;
+    const width = +svg.attr('width') - margin.left - margin.right - 20;
     const height = +svg.attr('height') - margin.top - margin.bottom;
 
-    const yMin = 0;
-    const yMax = 100;
+    let {yMin, yMax} = this.props;
+    yMin = yMin === 0 ? 0 : yMin || d3.min(data, (d) => d.yValue);
+    yMax = yMax || d3.max(data, (d) => d.yValue);
 
     // Create scales
     const xScale = d3.scaleTime()
@@ -67,7 +71,7 @@ export default class LineChart extends React.Component {
 
     // Create chart group
     const g = svg.append('g')
-      .attr('transform', 'translate('+margin.left+', '+margin.top+')');
+      .attr('transform', 'translate('+(margin.left+10)+', '+margin.top+')');
 
     // Append x axis
     g.append('g')
@@ -102,6 +106,23 @@ export default class LineChart extends React.Component {
     const tickShift = width / 4 - 3;
     g.selectAll('.axis--x .tick')
       .attr('transform', (d, i) => 'translate('+tickShift*(i+1)+', 0)')
+
+    const {yAxisLabel} = this.props;
+
+    if (yAxisLabel) {
+      const x = width / 2.9 * -1;
+      // Shift for small screens so axis isn't overlapped
+      const yShift = width < 320 ? 10 : 0;
+      const y = height / 14.4 * -1 - yShift;
+
+      g.append('text')
+        .attr('font-size', '14px')
+        .attr('x', x)
+        .attr('y', y)
+        .attr('text-anchor', 'start')
+        .attr('transform', 'rotate(-90)')
+        .text(yAxisLabel)
+    }
 
     return div.toReact();
   }

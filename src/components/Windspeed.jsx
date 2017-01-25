@@ -1,39 +1,41 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import BarChart from 'BarChart';
+import LineChart from 'LineChart';
 import { selectConditions } from 'selectConditionsActions';
 
 class Windspeed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {selectedInfo: {}};
-    this.onMouseChartEvent = this.onMouseChartEvent.bind(this);
+    this.displayConditions = this.displayConditions.bind(this);
   }
 
-  onMouseChartEvent(d, i) {
+  displayConditions(d, i) {
     this.props.dispatch(selectConditions(this.props.forecast[i]));
   }
 
-  renderBarChart() {
+  renderLineChart() {
     if (!this.props.forecast.length) return null;
+
+    const units = this.props.app.unitType === 'imperial' ? 'mph' : 'kph';
 
     const barData = this.props.forecast.map(d => {
       return {
-        xValue: d.date.weekday,
-        yValue: d.maxwind[
-          this.props.app.unitType === 'imperial' ? 'mph' : 'kph'
-        ]
+        xValue: new Date(d.date.epoch * 1000),
+        yValue: d.maxwind[units]
       };
     });
 
     return (
       <div>
         <h1>5 Day Windspeed</h1>
-        <BarChart
+        <LineChart
           data={barData}
-          onBarClick={this.onMouseChartEvent}
-          onBarMouseenter={this.onMouseChartEvent}
+          onBarClick={this.displayConditions}
+          onBarMouseenter={this.displayConditions}
+          yAxisLabel={'In ' + units}
+          yMin={0}
         />
       </div>
     );
@@ -42,7 +44,7 @@ class Windspeed extends React.Component {
   render() {
     return (
       <div>
-        {this.renderBarChart()}
+        {this.renderLineChart()}
       </div>
     );
   }
