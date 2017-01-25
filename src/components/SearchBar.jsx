@@ -40,11 +40,10 @@ class SearchBar extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    (async () => {
-      try {
-        const {city, state} = this.transformLocation(this.state.search);
-        const forecast = await getForecast(city, state);
+    const {city, state} = this.transformLocation(this.state.search);
 
+    getForecast(city, state)
+      .then((forecast) => {
         this.props.dispatch(changeLocation(city+', '+state));
         this.props.dispatch(selectConditions(forecast[0]));
         this.props.dispatch(forecastRetrievalCompleted(forecast));
@@ -52,15 +51,15 @@ class SearchBar extends React.Component {
 
         // Blur input for mobile users
         this.searchInputRef.blur();
-      } catch(err) {
+      })
+      .catch((err) => {
         console.log(err);
         this.props.dispatch(setAlert({
           type: 'danger',
           message: `Could not retrieve forecast data. Did you enter the city, 
           state/country correctly?`
         }));
-      }
-    })();
+      });
   }
 
   handleSearchChange(event) {

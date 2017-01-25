@@ -42,12 +42,14 @@ config.plugins.push(new webpack.optimize.UglifyJsPlugin({
   }
 }));
 
-// Set environment variables for opeanweathermap api key
+// Set environment variables for opeanweathermap api key and for production
+// build of react.
 config.plugins.push(new webpack.DefinePlugin({
   'process.env': {
     'WUNDERGROUND_API_KEY': JSON.stringify(
       process.env.WUNDERGROUND_API_KEY || WUNDERGROUND_API_KEY
-    )
+    ),
+    'NODE_ENV': JSON.stringify('production')
   }
 }));
 
