@@ -32,8 +32,8 @@ class Windspeed extends React.Component {
         <h1>5 Day Windspeed</h1>
         <LineChart
           data={barData}
-          onBarClick={this.displayConditions}
-          onBarMouseenter={this.displayConditions}
+          onDotClick={this.displayConditions}
+          onDotMouseenter={this.displayConditions}
           yAxisLabel={'In ' + units}
           yMin={0}
         />
