@@ -1,6 +1,7 @@
 # Weather D3.js App
 Powered by the [Weather Underground API](https://www.wunderground.com/weather/api/).
-Built using D3, React, Redux, and Webpack.
+Built using D3, React, Redux, and Webpack with custom reusable react components
+for D3 charts.
 
 ## Live Demo
 [Click here to view](http://weather-d3.surge.sh)
