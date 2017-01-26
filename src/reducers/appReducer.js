@@ -2,6 +2,7 @@ const defaultState = {
   alert: {},
   location: '',
   unitType: 'imperial',
+  tooltip: {}
 };
 
 export default function appReducer(state = defaultState, action) {
@@ -20,6 +21,11 @@ export default function appReducer(state = defaultState, action) {
       return {
         ...state,
         alert: action.alert
+      };
+    case 'SET_TOOLTIP':
+      return {
+        ...state,
+        tooltip: action.tooltip
       };
     default:
       return state;

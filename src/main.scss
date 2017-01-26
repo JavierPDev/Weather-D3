@@ -25,6 +25,10 @@ html, body {
   padding: 15px 0;
 }
 
+.panel-title {
+  text-transform: capitalize;
+}
+
 /*--------------------------------------------------------------
 # SVG Elements
 --------------------------------------------------------------*/
@@ -45,13 +49,6 @@ html, body {
   z-index: 1;
 }
 
-.tooltip {
-  color: white;
-  font-family: arial;
-  font-size: 18px;
-  z-index: 1;
-}
-
 .bar,
 .dot {
   fill: #336eb7;
@@ -63,6 +60,21 @@ html, body {
   fill: #31418f;
 }
 
+.arc path {
+  stroke: #fff;
+}
+
+.arc path:hover {
+  cursor: pointer;
+}
+
+.circlechart__label {
+  font-size: 16px;
+  fill: white;
+  text-anchor: middle;
+  text-transform: capitalize;
+}
+
 /*--------------------------------------------------------------
 # Component Elements
 --------------------------------------------------------------*/
@@ -72,5 +84,18 @@ html, body {
 
 .toggle--selected {
   color: red;
+}
+
+.tool-tip {
+  position: absolute;
+  z-index: 100;
+}
+
+.tool-tip__panel {
+  min-width: 150px;
+}
+
+.tool-tip ul {
+  padding-left: 10px;
 }
 

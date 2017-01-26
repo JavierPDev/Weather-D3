@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 class SelectedConditions extends React.Component {
   renderSelectedConditions() {
     const {selectedConditions} = this.props;
-    console.log(selectedConditions);
 
     if (!selectedConditions.high) return <p>Nothing atm</p>;
 

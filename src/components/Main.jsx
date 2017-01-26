@@ -5,12 +5,14 @@ import CurrentLocation from 'CurrentLocation';
 import Footer from 'Footer';
 import Nav from 'Nav';
 import SelectedConditions from 'SelectedConditions';
+import Tooltip from 'Tooltip';
 import UnitTypeToggle from 'UnitTypeToggle';
 
 export default function Main(props) {
   return (
     <div>
       <Nav />
+      <Tooltip />
       <main className="content">
         <div className="container">
           <div className="row">
