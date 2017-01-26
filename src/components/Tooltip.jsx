@@ -10,7 +10,7 @@ class Tooltip extends React.Component {
     // touch and not mouseover for displaying and hiding.
     document.body.addEventListener('click', (ev) => {
       if (ev.target === this.props.app.tooltip.originTarget) {
-        this.props.dispatch(hideTooltip());
+        this.props.hideTooltip();
       }
     }, false)
   }
@@ -47,4 +47,4 @@ export default connect(state => {
   return {
     app: state.app
   };
-})(Tooltip);
+}, { hideTooltip })(Tooltip);
