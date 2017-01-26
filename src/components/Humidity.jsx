@@ -12,7 +12,7 @@ class Humidity extends React.Component {
   }
 
   displayConditions(d, i) {
-    this.props.dispatch(selectConditions(this.props.forecast[i]));
+    this.props.selectConditions(this.props.forecast[i]);
   }
 
   renderLineChart() {
@@ -53,4 +53,4 @@ export default connect(state => {
   return {
     forecast: state.forecast
   };
-})(Humidity);
+}, { selectConditions })(Humidity);

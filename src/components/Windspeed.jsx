@@ -12,7 +12,7 @@ class Windspeed extends React.Component {
   }
 
   displayConditions(d, i) {
-    this.props.dispatch(selectConditions(this.props.forecast[i]));
+    this.props.selectConditions(this.props.forecast[i]);
   }
 
   renderLineChart() {
@@ -55,4 +55,4 @@ export default connect(state => {
     app: state.app,
     forecast: state.forecast
   };
-})(Windspeed);
+}, { selectConditions })(Windspeed);
