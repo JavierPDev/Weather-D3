@@ -1,25 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { setAlert } from 'appActions';
+import { hideAlert } from 'appActions';
 
 class Alert extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handleExitClick = this.handleExitClick.bind(this);
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps && nextProps.app.alert.type) {
       setTimeout(() => {
-        this.props.dispatch(setAlert({type: null, message: null}));
+        this.props.hideAlert();
       }, 3000);
     }
-  }
-
-  handleExitClick() {
-    this.props.dispatch(setAlert({type: null, message: null}));
   }
 
   render() {
@@ -29,7 +19,7 @@ class Alert extends React.Component {
 
     return (
       <div className={'alert alert-dismissable alert-' + type}>
-        <button className="close" onClick={this.handleExitClick}>
+        <button className="close" onClick={this.props.hideAlert}>
           <span aria-hidden="true">&times;</span>
         </button>
         {message}
@@ -42,4 +32,4 @@ export default connect(state => {
   return {
     app: state.app
   };
-})(Alert);
+}, { hideAlert })(Alert);
