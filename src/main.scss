@@ -1,11 +1,33 @@
 @import 'vendor';
 @import 'variables';
 
+/*--------------------------------------------------------------
+# Layout and Page Elements
+--------------------------------------------------------------*/
 html, body {
   height: 100%;
   margin: 0;
 }
 
+.active-nav-link {
+  font-weight: bold;
+}
+
+.content {
+  min-height: 100vh;
+}
+
+.footer {
+  background: #f8f8f8;
+  border-top: 1px solid #e7e7e7;
+  color: #777;
+  height: 50px;
+  padding: 15px 0;
+}
+
+/*--------------------------------------------------------------
+# SVG Elements
+--------------------------------------------------------------*/
 .polygons path {
   cursor: pointer;
   fill: black;
@@ -30,15 +52,20 @@ html, body {
   z-index: 1;
 }
 
-.bar, .dot {
+.bar,
+.dot {
   fill: #336eb7;
 }
 
-.bar:hover, .dot:hover {
+.bar:hover,
+.dot:hover {
   cursor: pointer;
   fill: #31418f;
 }
 
+/*--------------------------------------------------------------
+# Component Elements
+--------------------------------------------------------------*/
 .toggle {
   cursor: pointer;
 }
@@ -47,6 +74,3 @@ html, body {
   color: red;
 }
 
-.active-nav-link {
-  font-weight: bold;
-}
