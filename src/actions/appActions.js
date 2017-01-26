@@ -22,6 +22,13 @@ export function setAlert({type, message}) {
   };
 }
 
+export function hideAlert() {
+  return {
+    type: 'SET_ALERT',
+    alert: {}
+  };
+}
+
 export function setTooltip({x, y, contentElement, originTarget, title}) {
   return {
     type: 'SET_TOOLTIP',
