@@ -19,8 +19,8 @@ export default class CircleChart extends React.Component {
   }
 
   getComponentDimensions() {
-    const componentWidth = window.innerWidth < 480 ? window.innerWidth : 480;
-    const componentHeight = componentWidth || 480;
+    const componentWidth = window.innerWidth < 450 ? window.innerWidth : 450;
+    const componentHeight = componentWidth || 450;
 
     return {componentWidth, componentHeight};
   }
@@ -41,7 +41,7 @@ export default class CircleChart extends React.Component {
     const height = this.state.componentHeight - margin.top - margin.bottom;
     const radius = Math.min(width, height) / 2;
     const outerRadius = radius - 15;
-    const innerRadius = chartType === 'pie' ? radius - 60 : 0;
+    const innerRadius = chartType === 'donut' ? radius - (.45 * radius) : 0;
 
     const chartColors = colors || ['red', 'blue', 'green', 'grey', 'brown'];
 

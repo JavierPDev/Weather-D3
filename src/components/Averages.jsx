@@ -4,95 +4,77 @@ import * as d3 from 'd3';
 
 import CircleChart from 'CircleChart';
 import { setTooltip, hideTooltip } from 'appActions';
+import {
+  getConditionsByDaysForCircleChart,
+  getHumidityByDaysForCircleChart
+} from '../services/forecastTransforms';
 
 class Averages extends React.Component {
   constructor(props) {
     super(props);
 
     this.displayTooltip = this.displayTooltip.bind(this);
-    this.hideTooltip = this.hideTooltip.bind(this);
   }
 
   displayTooltip(d, i) {
+    const img = d.data.img ?
+      <img src={d.data.img} alt={d.data.type} /> : null;
+
     const contentElement = (
-      <ul>
-        {d.data.tooltipData.map(t => <li key={t}>{t}</li>)}
-      </ul>
+      <div>
+        {img}
+        <ul>
+          {d.data.tooltipData.map(t => <li key={t}>{t}</li>)}
+        </ul>
+      </div>
     );
 
     const tooltip = {
       x: d3.event.pageX+15+'px',
       y: d3.event.pageY-10+'px',
       contentElement,
-      title: d.data.type,
+      title: d.data.type + ' - ' + d.data.percentage + '%',
       originTarget: d3.event.target
-    }
+    };
 
-    this.props.dispatch(setTooltip(tooltip));
+    this.props.setTooltip(tooltip);
   }
 
-  hideTooltip() {
-    this.props.dispatch(hideTooltip());
-  }
+  render() {
+    const {forecast} = this.props;
 
-  renderCircleChart() {
-    if (!this.props.forecast.length) return null;
+    if (!forecast.length) return null;
 
-    const data = [
-      {type: 'cloudy', value: 2, tooltipData: ['Monday', 'Tuesday']},
-      {type: 'sunny', value: 1, tooltipData: ['Monday']},
-      {type: 'rainy', value: 2, tooltipData: ['Monday', 'Tuesday']},
-    ];
+    const conditions = getConditionsByDaysForCircleChart(forecast);
+    const humidity = getHumidityByDaysForCircleChart(forecast);
 
     return (
       <div className="row">
         <h1>5 Day Averages</h1>
 
-        <div className="col-xs-6">
-          <CircleChart
-            data={data}
-            chartType="pie"
-            onArcClick={this.displayTooltip}
-            onArcMousemove={this.displayTooltip}
-            onArcMouseleave={this.hideTooltip}
-            colors={['aqua', 'teal', 'steelblue', 'navy', 'lightgreen']}
-          />
-        </div>
         <div className="col-sm-6">
           <CircleChart
-            data={data.concat([{type: 'snowy', value: 3}, {type: 'stormy', value: 1}])}
+            data={conditions}
             chartType="donut"
             onArcClick={this.displayTooltip}
             onArcMousemove={this.displayTooltip}
-            onArcMouseleave={this.hideTooltip}
+            onArcMouseleave={this.props.hideTooltip}
+            colors={
+              ['mediumturquoise', 'lightgreen',
+                'steelblue', 'lightblue', 'teal']
+            }
           />
         </div>
         <div className="col-sm-6">
           <CircleChart
-            data={data.concat([{type: 'snowy', value: 3}])}
-            chartType="donut"
-            onArcClick={this.displayTooltip}
-            onArcMousemove={this.displayTooltip}
-            onArcMouseleave={this.hideTooltip}
-          />
-        </div>
-        <div className="col-sm-6">
-          <CircleChart
-            data={data.concat([{type: 'snowy', value: 3}, {type: 'stormy', value: 1}])}
+            data={humidity}
             chartType="pie"
             onArcClick={this.displayTooltip}
             onArcMousemove={this.displayTooltip}
-            onArcMouseleave={this.hideTooltip}
+            onArcMouseleave={this.props.hideTooltip}
+            colors={['dodgerblue', 'firebrick', 'lightcoral', 'lightblue']}
           />
         </div>
-      </div>
-    );
-  }
-
-  render() {
-    return (
-      <div>
-        {this.renderCircleChart()}
       </div>
     );
   }
@@ -102,4 +84,4 @@ export default connect(state => {
   return {
     forecast: state.forecast
   };
-})(Averages);
+}, { hideTooltip, setTooltip })(Averages);
