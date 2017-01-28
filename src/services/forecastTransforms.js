@@ -77,7 +77,7 @@ export function getHumidityByDaysForCircleChart(forecast) {
     } else if (value.avehumidity > 50) {
       processedData[2].value++;
       processedData[2].tooltipData.push(value.date.weekday);
-    } else if (value.avehumidity > 26) {
+    } else if (value.avehumidity > 25) {
       processedData[1].value++;
       processedData[1].tooltipData.push(value.date.weekday);
     } else {
