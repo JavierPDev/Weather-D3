@@ -1,18 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-class CurrentLocation extends React.Component {
-  renderLocation() {
-    const {location} = this.props.app;
+function CurrentLocation(props) {
+  const {location} = props.app;
 
-    if (!location) return null;
+  if (!location) return null;
 
-    return <h2>{location.replace('_', ' ')}</h2>;
-  }
-
-  render() {
-    return this.renderLocation();
-  }
+  return <h2>{location.replace('_', ' ')}</h2>;
 }
 
 export default connect(state => {
