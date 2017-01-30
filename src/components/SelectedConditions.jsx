@@ -5,7 +5,7 @@ class SelectedConditions extends React.Component {
   renderSelectedConditions() {
     const {selectedConditions} = this.props;
 
-    if (!selectedConditions.high) return <p>Nothing atm</p>;
+    if (!selectedConditions.high) return <p>No results</p>;
 
     const {unitType} = this.props.app;
     const tempUnit = unitType === 'imperial' ? 'fahrenheit' : 'celsius';
