@@ -30,7 +30,7 @@ class Humidity extends React.Component {
         <h1>5 Day Humidity</h1>
 
         <p>
-          View windspeed highs by using a D3 chart. Hover over
+          View humidity by using a D3 chart. Hover over
           or click on points to see details above.
         </p>
 
