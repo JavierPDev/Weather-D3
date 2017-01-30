@@ -49,7 +49,7 @@ class Averages extends React.Component {
     const humidity = getHumidityByDaysForCircleChart(forecast);
 
     return (
-      <div className="row">
+      <div>
         <h1>5 Day Averages</h1>
 
         <p>
