@@ -30,6 +30,12 @@ class Forecast extends React.Component {
     return (
       <div>
         <h1>5 Day Forecast</h1>
+
+        <p>
+          View temperature highs using a D3 bar chart. Hover over or click on
+          bars to see details above.
+        </p>
+
         <BarChart
           data={barData}
           onBarClick={this.displayConditions}

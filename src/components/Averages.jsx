@@ -52,6 +52,12 @@ class Averages extends React.Component {
       <div className="row">
         <h1>5 Day Averages</h1>
 
+        <p>
+          Overview of conditions and humidity throughout the five days using
+          D3 donut/pie charts. Hover over or click on chart sections for more
+          information.
+        </p>
+
         <div className="col-sm-6">
           <CircleChart
             data={conditions}
