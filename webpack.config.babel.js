@@ -13,9 +13,7 @@ export default {
         test: /\.html$/,
         exclude: /node_modules/,
         loader: 'raw-loader'
-      }
-    ],
-    preloaders: [
+      },
       {
         test: /(\.jsx$)|(\.js$)/,
         exclude: /node_modules/,
