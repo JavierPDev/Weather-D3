@@ -3,16 +3,31 @@ import ReactFauxDOM from 'react-faux-dom';
 import * as d3 from 'd3';
 
 export default class BarChart extends React.Component {
+  static propTypes = {
+    /**
+     * Data to display in the chart. Input structure of [{xValue, yValue}].
+     */
+    data: React.PropTypes.array.isRequired,
+    /**
+     * Callback function to execute when bar is clicked.
+     */
+    onBarClick: React.PropTypes.func,
+    /**
+     * Callback function to execute when bar is moused over.
+     */
+    onBarMouseenter: React.PropTypes.func
+  }
+
   constructor(props) {
     super(props);
     const dimensions = this.getComponentDimensions();
     this.state = {...dimensions};
   }
 
-  static propTypes = {
-    data: React.PropTypes.array.isRequired,
-    onBarClick: React.PropTypes.func,
-    onBarMouseenter: React.PropTypes.func
+  componentDidMount() {
+    d3.select(window).on('resize', () => {
+      this.setState(this.getComponentDimensions());
+    });
   }
 
   getComponentDimensions() {
@@ -20,12 +35,6 @@ export default class BarChart extends React.Component {
     const componentHeight = componentWidth < 640 ? componentWidth / 1.3 : 480;
 
     return {componentWidth, componentHeight};
-  }
-
-  componentDidMount() {
-    d3.select(window).on('resize', () => {
-      this.setState(this.getComponentDimensions());
-    });
   }
 
   render() {

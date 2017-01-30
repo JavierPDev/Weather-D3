@@ -3,19 +3,44 @@ import ReactFauxDOM from 'react-faux-dom';
 import * as d3 from 'd3';
 
 export default class CircleChart extends React.Component {
+  static propTypes = {
+    /**
+     * Data to display in the chart. Input structure of [{type, value}].
+     */
+    data: React.PropTypes.array.isRequired,
+    /**
+     * Chart type can be either 'donut' or 'pie'. Chart default displays pie.
+     */
+    chartType: React.PropTypes.string.isRequired,
+    /**
+     * Array of colors to use for chart. If none entered, uses default
+     * component colors instead.
+     */
+    colors: React.PropTypes.array,
+    /**
+     * Callback function to execute when arc section is clicked.
+     */
+    onArcClick: React.PropTypes.func,
+    /**
+     * Callback function to execute when arc section is moused over.
+     */
+    onArcMousemove: React.PropTypes.func,
+    /**
+     * Callback function to execute when arc section mouse leaves.
+     */
+    onArcMouseleave: React.PropTypes.func
+  }
+
   constructor(props) {
     super(props);
     const dimensions = this.getComponentDimensions();
     this.state = {...dimensions};
   }
 
-  static propTypes = {
-    data: React.PropTypes.array.isRequired,
-    chartType: React.PropTypes.string.isRequired,
-    colors: React.PropTypes.array,
-    onArcClick: React.PropTypes.func,
-    onArcMousemove: React.PropTypes.func,
-    onArcMouseleave: React.PropTypes.func
+  componentDidMount() {
+    d3.select(window).on('resize', () => {
+      this.setState(this.getComponentDimensions());
+    });
   }
 
   getComponentDimensions() {
@@ -23,12 +48,6 @@ export default class CircleChart extends React.Component {
     const componentHeight = componentWidth || 450;
 
     return {componentWidth, componentHeight};
-  }
-
-  componentDidMount() {
-    d3.select(window).on('resize', () => {
-      this.setState(this.getComponentDimensions());
-    });
   }
 
   render() {

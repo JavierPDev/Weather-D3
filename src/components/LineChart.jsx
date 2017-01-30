@@ -3,19 +3,45 @@ import ReactFauxDOM from 'react-faux-dom';
 import * as d3 from 'd3';
 
 export default class LineChart extends React.Component {
+  static propTypes = {
+    /**
+     * Data to display in the chart. Input structure of [{xValue, yValue}].
+     */
+    data: React.PropTypes.array.isRequired,
+    /**
+     * Callback function to execute when dot is clicked.
+     */
+    onDotClick: React.PropTypes.func,
+    /**
+     * Callback function to execute when dot is moused over.
+     */
+    onDotMouseenter: React.PropTypes.func,
+    /**
+     * Label of y axis
+     */
+    yAxisLabel: React.PropTypes.string,
+    /**
+     * Minimum y value. If none entered it will be calculated using input y
+     * values.
+     */
+    yMin: React.PropTypes.number,
+    /**
+     * Maximum y value. If none entered it will be calculated using input y
+     * values.
+     */
+    YMax: React.PropTypes.number
+  }
+
   constructor(props) {
     super(props);
     const dimensions = this.getComponentDimensions();
     this.state = {...dimensions};
   }
 
-  static propTypes = {
-    data: React.PropTypes.array.isRequired,
-    onDotClick: React.PropTypes.func,
-    onDotMouseenter: React.PropTypes.func,
-    yAxisLabel: React.PropTypes.string,
-    yMin: React.PropTypes.number,
-    YMax: React.PropTypes.number
+  componentDidMount() {
+    d3.select(window).on('resize', () => {
+      this.setState(this.getComponentDimensions());
+    });
   }
 
   getComponentDimensions() {
@@ -23,12 +49,6 @@ export default class LineChart extends React.Component {
     const componentHeight = componentWidth < 640 ? componentWidth / 1.3 : 480;
 
     return {componentWidth, componentHeight};
-  }
-
-  componentDidMount() {
-    d3.select(window).on('resize', () => {
-      this.setState(this.getComponentDimensions());
-    });
   }
 
   render() {
