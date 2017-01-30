@@ -2,6 +2,8 @@ import React from 'react';
 import ReactFauxDOM from 'react-faux-dom';
 import * as d3 from 'd3';
 
+import { getComponentDimensions } from '../services/dimensions';
+
 export default class CircleChart extends React.Component {
   static propTypes = {
     /**
@@ -33,21 +35,14 @@ export default class CircleChart extends React.Component {
 
   constructor(props) {
     super(props);
-    const dimensions = this.getComponentDimensions();
+    const dimensions = getComponentDimensions();
     this.state = {...dimensions};
   }
 
   componentDidMount() {
     d3.select(window).on('resize', () => {
-      this.setState(this.getComponentDimensions());
+      this.setState(getComponentDimensions());
     });
-  }
-
-  getComponentDimensions() {
-    const componentWidth = window.innerWidth < 450 ? window.innerWidth : 450;
-    const componentHeight = componentWidth || 450;
-
-    return {componentWidth, componentHeight};
   }
 
   render() {

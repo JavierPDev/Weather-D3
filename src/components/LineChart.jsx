@@ -2,6 +2,8 @@ import React from 'react';
 import ReactFauxDOM from 'react-faux-dom';
 import * as d3 from 'd3';
 
+import { getComponentDimensions } from '../services/dimensions';
+
 export default class LineChart extends React.Component {
   static propTypes = {
     /**
@@ -34,21 +36,14 @@ export default class LineChart extends React.Component {
 
   constructor(props) {
     super(props);
-    const dimensions = this.getComponentDimensions();
+    const dimensions = getComponentDimensions();
     this.state = {...dimensions};
   }
 
   componentDidMount() {
     d3.select(window).on('resize', () => {
-      this.setState(this.getComponentDimensions());
+      this.setState(getComponentDimensions());
     });
-  }
-
-  getComponentDimensions() {
-    const componentWidth = window.innerWidth < 640 ? window.innerWidth : 640;
-    const componentHeight = componentWidth < 640 ? componentWidth / 1.3 : 480;
-
-    return {componentWidth, componentHeight};
   }
 
   render() {
