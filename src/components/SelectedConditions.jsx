@@ -16,33 +16,50 @@ class SelectedConditions extends React.Component {
     return (
       <div className="panel panel-default">
         <div className="panel-body">
-          <div>
-            {selectedConditions.date.weekday}
+          <div className="row">
+            <div className="col-sm-3">
+              <center>
+                <img width="75" height="75" src={selectedConditions.icon_url} />
+                <br />
+                <small>
+                  {selectedConditions.conditions}
+                </small>
+              </center>
+            </div>
+            <div className="col-sm-3">
+              <h4>{selectedConditions.date.weekday}</h4>
+              <h3>
+                <small>HI</small>&nbsp;
+                {selectedConditions.high[tempUnit] + degrees}
+              </h3>
+              <h5>
+                <small>LO</small>&nbsp;
+                {selectedConditions.low[tempUnit] + degrees}
+              </h5>
+            </div>
+            <div className="col-sm-3">
+              <h4 className="selected-conditions-heading">Wind</h4>
+              <h5>
+                <small>MAX</small>&nbsp;
+                {selectedConditions.maxwind[windUnit] + windUnit}
+              </h5>
+              <h5>
+                <small>AVG</small>&nbsp;
+                {selectedConditions.avewind[windUnit] + windUnit}
+              </h5>
+            </div>
+            <div className="col-sm-3">
+              <h4 className="selected-conditions-heading">H2O</h4>
+              <h5>
+                <small>PRECIP</small>&nbsp;
+                {selectedConditions.qpf_allday[precipUnit] + precipUnit}
+              </h5>
+              <h5>
+                <small>HUMID</small>&nbsp;
+                {selectedConditions.avehumidity}%
+              </h5>
+            </div>
           </div>
-          <div>
-            Conditions: {selectedConditions.conditions}
-          </div>
-          <div>
-            High: {selectedConditions.high[tempUnit] + degrees}
-          </div>
-          <div>
-            Low: {selectedConditions.low[tempUnit] + degrees}
-          </div>
-          <div>
-            Maxwind: {selectedConditions.maxwind[windUnit] + windUnit}
-          </div>
-          <div>
-            Average wind: {selectedConditions.avewind[windUnit] + windUnit}
-          </div>
-          <div>
-            Precipitation: {
-              selectedConditions.qpf_allday[precipUnit] + precipUnit
-            }
-          </div>
-          <div>
-            Humidity: {selectedConditions.avehumidity}%
-          </div>
-          <img src={selectedConditions.icon_url} />
         </div>
       </div>
     );

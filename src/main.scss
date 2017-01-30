@@ -99,3 +99,12 @@ html, body {
   padding-left: 10px;
 }
 
+.selected-conditions-heading {
+  margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 500px) {
+  .selected-conditions-heading {
+    margin-top: 25px;
+  }
+}
