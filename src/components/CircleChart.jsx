@@ -3,6 +3,7 @@ import ReactFauxDOM from 'react-faux-dom';
 import * as d3 from 'd3';
 
 import { getComponentDimensions } from '../services/dimensions';
+import { triggerAnimations } from '../services/animations';
 
 export default class CircleChart extends React.Component {
   static propTypes = {
@@ -46,22 +47,8 @@ export default class CircleChart extends React.Component {
   }
 
   componentDidUpdate() {
-    this.triggerAnimations();
-  }
-
-  /**
-   * Retrigger bars animating up. Needed for unit and location change.
-   */
-  triggerAnimations() {
-    const circlecharts = document.querySelectorAll('.circlechart--animated');
-    Array.prototype.forEach.call(circlecharts, circlechart => {
-      circlechart.style.visibility = 'hidden';
-      circlechart.classList.remove('circlechart--animated');
-      setTimeout(() => {
-        circlechart.classList.add('circlechart--animated');
-        circlechart.style.visibility = 'visible';
-      }, 100);
-    });
+    triggerAnimations('circlechart--animated');
+    triggerAnimations('circlechart__label--animated');
   }
 
   render() {
@@ -95,21 +82,22 @@ export default class CircleChart extends React.Component {
     const g = svg.selectAll('.arc')
       .data(donut(data))
       .enter().append('g')
-        .attr('class', 'arc circlechart circlechart--animated');
 
     g.append('path')
       .attr('d', arc)
+      .attr('class', 'arc circlechart circlechart--animated')
       .style('fill', (d, i) => chartColors[i])
       .on('click', this.props.onArcClick)
       .on('touchstart', this.props.onArcClick)
       .on('mousemove', this.props.onArcMousemove)
       .on('mouseleave', this.props.onArcMouseleave);
 
-    g.append('text')
-      .attr('class', 'circlechart__label')
-      .attr('transform', (d) => 'translate('+arc.centroid(d)+')')
-      .attr('dy', '.35em')
-      .text((d) => d.data.type);
+    g.append('g')
+      .attr('class', 'circlechart__label circlechart__label--animated')
+      .append('text')
+        .attr('transform', (d) => 'translate('+arc.centroid(d)+')')
+        .attr('dy', '.35em')
+        .text((d) => d.data.type);
 
     return div.toReact();
   }

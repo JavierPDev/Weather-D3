@@ -3,6 +3,7 @@ import ReactFauxDOM from 'react-faux-dom';
 import * as d3 from 'd3';
 
 import { getComponentDimensions } from '../services/dimensions';
+import { triggerAnimations } from '../services/animations';
 
 export default class BarChart extends React.Component {
   static propTypes = {
@@ -33,22 +34,7 @@ export default class BarChart extends React.Component {
   }
 
   componentDidUpdate() {
-    this.triggerAnimations();
-  }
-
-  /**
-   * Retrigger bars animating up. Needed for unit and location change.
-   */
-  triggerAnimations() {
-    const bars = document.querySelectorAll('.bar--animated');
-    Array.prototype.forEach.call(bars, bar => {
-      bar.style.visibility = 'hidden';
-      bar.classList.remove('bar--animated');
-      setTimeout(() => {
-        bar.classList.add('bar--animated');
-        bar.style.visibility = 'visible';
-      }, 100);
-    });
+    triggerAnimations('bar--animated');
   }
 
   render() {
@@ -114,7 +100,7 @@ export default class BarChart extends React.Component {
     g.selectAll('.label')
       .data(data)
       .enter().append('text')
-        .attr('class', 'label label--animated')
+        .attr('class', 'label bar__label--animated')
         .attr('x', (d, i) => xScale(d.xValue) + xScale.bandwidth() / 2)
         .attr('y', (d, i) => yScale(d.yValue) - textMarginBottom)
         .attr('font-family', 'sans-serif')

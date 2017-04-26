@@ -116,7 +116,7 @@ html, body {
   animation: bar-popup 1s forwards;
   transform-origin: 0 100%;
 }
-.label--animated {
+.bar__label--animated {
   animation: label-popup .9s forwards;
   transform-origin: 0 100%;
 }
@@ -126,7 +126,10 @@ html, body {
   transform-origin: 0 100%;
 }
 .circlechart--animated {
-  animation: spin-into-view 1.3s forwards;
+  animation: spin-into-view 1s forwards;
+}
+.circlechart__label--animated {
+  animation: expand-into-view 1s, forwards;
 }
 @keyframes bar-popup {
   from {transform: scaleY(0);}
@@ -146,5 +149,15 @@ html, body {
   }
   to {
     transform: scale(1) rotate(0deg);
+  }
+}
+@keyframes expand-into-view {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
   }
 }

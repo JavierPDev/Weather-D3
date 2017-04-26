@@ -3,6 +3,7 @@ import ReactFauxDOM from 'react-faux-dom';
 import * as d3 from 'd3';
 
 import { getComponentDimensions } from '../services/dimensions';
+import { triggerAnimations } from '../services/animations';
 
 export default class LineChart extends React.Component {
   static propTypes = {
@@ -47,22 +48,7 @@ export default class LineChart extends React.Component {
   }
 
   componentDidUpdate() {
-    this.triggerAnimations();
-  }
-
-  /**
-   * Retrigger bars animating up. Needed for unit and location change.
-   */
-  triggerAnimations() {
-    const paths = document.querySelectorAll('.--animated');
-    Array.prototype.forEach.call(paths, path => {
-      path.style.visibility = 'hidden';
-      path.classList.remove('path--animated');
-      setTimeout(() => {
-        path.classList.add('--animated');
-        path.style.visibility = 'visible';
-      }, 100);
-    });
+    this.triggerAnimations('path--animated');
   }
 
   render() {
