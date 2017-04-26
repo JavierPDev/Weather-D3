@@ -18,12 +18,13 @@ class Forecast extends React.Component {
   renderBarChart() {
     if (!this.props.forecast.length) return null;
 
+    const unitType = this.props.app.unitType === 'imperial'
+      ? 'fahrenheit' : 'celsius';
+
     const barData = this.props.forecast.map(d => {
       return {
         xValue: d.date.weekday,
-        yValue: d.high[
-          this.props.app.unitType === 'imperial' ? 'fahrenheit' : 'celsius'
-        ]
+        yValue: d.high[unitType]
       };
     });
 
