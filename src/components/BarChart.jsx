@@ -32,6 +32,25 @@ export default class BarChart extends React.Component {
     });
   }
 
+  componentDidUpdate() {
+    this.triggerAnimations();
+  }
+
+  /**
+   * Retrigger bars animating up. Needed for unit and location change.
+   */
+  triggerAnimations() {
+    const bars = document.querySelectorAll('.bar--animated');
+    Array.prototype.forEach.call(bars, bar => {
+      bar.style.visibility = 'hidden';
+      bar.classList.remove('bar--animated');
+      setTimeout(() => {
+        bar.classList.add('bar--animated');
+        bar.style.visibility = 'visible';
+      }, 100);
+    });
+  }
+
   render() {
     const div = new ReactFauxDOM.Element('div');
     const {data} = this.props;
@@ -83,7 +102,7 @@ export default class BarChart extends React.Component {
     g.selectAll('.bar')
       .data(data)
       .enter().append('rect')
-        .attr('class', 'bar')
+        .attr('class', 'bar bar--animated')
         .attr('x', (d, i) => xScale(d.xValue))
         .attr('y', (d, i) => yScale(d.yValue))
         .attr('width', xScale.bandwidth())
@@ -95,7 +114,7 @@ export default class BarChart extends React.Component {
     g.selectAll('.label')
       .data(data)
       .enter().append('text')
-        .attr('class', 'label')
+        .attr('class', 'label label--animated')
         .attr('x', (d, i) => xScale(d.xValue) + xScale.bandwidth() / 2)
         .attr('y', (d, i) => yScale(d.yValue) - textMarginBottom)
         .attr('font-family', 'sans-serif')

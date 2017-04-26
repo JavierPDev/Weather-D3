@@ -46,6 +46,25 @@ export default class LineChart extends React.Component {
     });
   }
 
+  componentDidUpdate() {
+    this.triggerAnimations();
+  }
+
+  /**
+   * Retrigger bars animating up. Needed for unit and location change.
+   */
+  triggerAnimations() {
+    const paths = document.querySelectorAll('.--animated');
+    Array.prototype.forEach.call(paths, path => {
+      path.style.visibility = 'hidden';
+      path.classList.remove('path--animated');
+      setTimeout(() => {
+        path.classList.add('--animated');
+        path.style.visibility = 'visible';
+      }, 100);
+    });
+  }
+
   render() {
     const div = new ReactFauxDOM.Element('div');
     const {data} = this.props;
@@ -101,6 +120,7 @@ export default class LineChart extends React.Component {
     // Append line
     g.append('path')
       .datum(data)
+      .attr('class', 'path path--animated')
       .attr('fill', 'none')
 			.attr("stroke", "#666")
       .attr('d', line);
@@ -112,7 +132,7 @@ export default class LineChart extends React.Component {
         .attr('cx', (d, i) => xScale(d.xValue))
         .attr('cy', (d, i) => yScale(d.yValue))
         .attr('r', 5)
-        .attr('class', 'dot')
+        .attr('class', 'dot dot--animated')
         .on('click', this.props.onDotClick)
         .on('mouseenter', this.props.onDotMouseenter)
 

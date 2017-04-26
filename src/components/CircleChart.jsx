@@ -45,6 +45,25 @@ export default class CircleChart extends React.Component {
     });
   }
 
+  componentDidUpdate() {
+    this.triggerAnimations();
+  }
+
+  /**
+   * Retrigger bars animating up. Needed for unit and location change.
+   */
+  triggerAnimations() {
+    const circlecharts = document.querySelectorAll('.circlechart--animated');
+    Array.prototype.forEach.call(circlecharts, circlechart => {
+      circlechart.style.visibility = 'hidden';
+      circlechart.classList.remove('circlechart--animated');
+      setTimeout(() => {
+        circlechart.classList.add('circlechart--animated');
+        circlechart.style.visibility = 'visible';
+      }, 100);
+    });
+  }
+
   render() {
     const div = new ReactFauxDOM.Element('div');
     const {data, chartType, colors} = this.props;
@@ -76,7 +95,7 @@ export default class CircleChart extends React.Component {
     const g = svg.selectAll('.arc')
       .data(donut(data))
       .enter().append('g')
-        .attr('class', 'arc');
+        .attr('class', 'arc circlechart circlechart--animated');
 
     g.append('path')
       .attr('d', arc)
