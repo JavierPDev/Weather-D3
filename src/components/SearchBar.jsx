@@ -40,30 +40,38 @@ class SearchBar extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const {city, state} = this.transformLocation(this.state.search);
+    try {
+      const {city, state} = this.transformLocation(this.state.search);
 
-    getForecast(city, state)
-      .then((forecast) => {
-        this.props.dispatch(changeLocation(city+', '+state));
-        this.props.dispatch(selectConditions(forecast[0]));
-        this.props.dispatch(forecastRetrievalCompleted(forecast));
-        this.setState({search: ''});
+      getForecast(city, state)
+        .then((forecast) => {
+          this.props.dispatch(changeLocation(city+', '+state));
+          this.props.dispatch(selectConditions(forecast[0]));
+          this.props.dispatch(forecastRetrievalCompleted(forecast));
+          this.setState({search: ''});
 
-        // Blur input for mobile users
-        this.searchInputRef.blur();
-      })
-      .catch((err) => {
-        console.log(err);
-        this.props.dispatch(setAlert({
-          type: 'danger',
-          message: `Could not retrieve forecast data. Did you enter the city, 
-          state/country correctly?`
-        }));
-      });
+          // Blur input for mobile users
+          this.searchInputRef.blur();
+        })
+        .catch((err) => {
+          console.log(err);
+          this.props.dispatch(setAlert({
+            type: 'danger',
+            message: `Could not retrieve forecast data. Did you enter the city, 
+            state/country correctly?`
+          }));
+        });
+    } catch(e) {
+      this.props.dispatch(setAlert({
+        type: 'danger',
+        message: `Could not retrieve forecast data. Did you enter the city, 
+        state/country correctly?`
+      }));
+    }
   }
 
   handleSearchChange(event) {
-    const search = event.target.value
+    const search = event.target.value;
     this.setState({search});
   }
 
